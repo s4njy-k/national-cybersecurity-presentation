@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NCS Presenter Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  
+  <div class="presenter-layout">
+    <header class="presenter-header">
+      <h2>NCS Presentation <span>| Control Center</span></h2>
+      <div id="status" class="status-indicator offline">Connecting...</div>
+    </header>
+
+    <main class="dashboard-main">
+      <!-- Live Sync View -->
+      <div class="preview-container" style="flex: 2;">
+        <div class="preview-label">Live Audience View <span id="currentCount"></span></div>
+        <iframe id="liveFrame" src="./index.html" frameborder="0" width="100%" height="100%"></iframe>
+      </div>
+      
+      <!-- Next Slide Preview -->
+      <div class="preview-container" style="flex: 1;">
+        <div class="preview-label" style="background: rgba(0, 210, 255, 0.4);">Next Slide Preview <span id="nextCount"></span></div>
+        <!-- Use preview=true to prevent socket binding in the iframe -->
+        <iframe id="nextFrame" src="./index.html?preview=true" frameborder="0" width="100%" height="100%"></iframe>
+      </div>
+    </main>
+
+    <div class="controls">
+      <button class="btn btn-secondary" id="prevBtn" disabled>Previous Slide</button>
+      <button class="btn btn-primary" id="nextBtn" disabled>Next Slide</button>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const secret = urlParams.get('secret');
+
+    const socket = io({ auth: { token: secret } });
+    
+    // Fixed number of slides for this presentation
+    const TOTAL_SLIDES = 7;
+    let currentIndex = 0;
+
+    const statusEl = document.getElementById('status');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const liveFrame = document.getElementById('liveFrame');
+    const nextFrame = document.getElementById('nextFrame');
+    
+    const currentCount = document.getElementById('currentCount');
+    const nextCount = document.getElementById('nextCount');
+
+    socket.on('connect', () => {
+      statusEl.textContent = 'Live/Authenticated';
+      statusEl.classList.remove('offline');
+    });
+
+    socket.on('connect_error', () => {
+      statusEl.textContent = 'Auth Failed';
+      statusEl.classList.add('offline');
+    });
+
+    socket.on('disconnect', () => {
+      statusEl.textContent = 'Disconnected';
+      statusEl.classList.add('offline');
+    });
+
+    socket.on('initSlide', (data) => {
+      updatePresenterState(data.index);
+    });
+
+    socket.on('slideUpdate', (data) => {
+      updatePresenterState(data.index);
+    });
+
+    function updatePresenterState(index) {
+      currentIndex = index;
+      
+      // Update buttons
+      prevBtn.disabled = currentIndex <= 0;
+      nextBtn.disabled = currentIndex >= TOTAL_SLIDES - 1;
+
+      currentCount.textContent = `(${currentIndex + 1}/${TOTAL_SLIDES})`;
+
+      // Push next slide view to the un-socketed preview iframe
+      const nextIdx = Math.min(currentIndex + 1, TOTAL_SLIDES - 1);
+      nextCount.textContent = `(${nextIdx + 1}/${TOTAL_SLIDES})`;
+      
+      // We must wait for the iframe to load if it hasn't, 
+      // but typically we can just postMessage
+      if (nextFrame.contentWindow) {
+        nextFrame.contentWindow.postMessage({ type: 'forceUpdate', index: nextIdx }, '*');
+      }
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if (currentIndex > 0) emitChange(currentIndex - 1);
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentIndex < TOTAL_SLIDES - 1) emitChange(currentIndex + 1);
+    });
+
+    function emitChange(newIndex) {
+      socket.emit('slideChange', { index: newIndex });
+    }
+
+    // Ensure the iframe renders the correct next slide when it finishes loading
+    nextFrame.addEventListener('load', () => {
+      nextFrame.contentWindow.postMessage({ type: 'forceUpdate', index: Math.min(currentIndex + 1, TOTAL_SLIDES - 1) }, '*');
+    });
+  </script>
+</body>
+</html>
