@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NCS Presenter Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
   
@@ -19,14 +19,14 @@
       <!-- Live Sync View -->
       <div class="preview-container" style="flex: 2;">
         <div class="preview-label">Live Audience View <span id="currentCount"></span></div>
-        <iframe id="liveFrame" src="/index.html" frameborder="0" width="100%" height="100%"></iframe>
+        <iframe id="liveFrame" src="./index.html" frameborder="0" width="100%" height="100%"></iframe>
       </div>
       
       <!-- Next Slide Preview -->
       <div class="preview-container" style="flex: 1;">
         <div class="preview-label" style="background: rgba(0, 210, 255, 0.4);">Next Slide Preview <span id="nextCount"></span></div>
         <!-- Use preview=true to prevent socket binding in the iframe -->
-        <iframe id="nextFrame" src="/index.html?preview=true" frameborder="0" width="100%" height="100%"></iframe>
+        <iframe id="nextFrame" src="./index.html?preview=true" frameborder="0" width="100%" height="100%"></iframe>
       </div>
     </main>
 
