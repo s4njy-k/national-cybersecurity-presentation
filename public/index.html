@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>National Cybersecurity Strategy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  
+  <div class="presentation-container" id="slides-container">
+    
+    <!-- Slide 1 -->
+    <div class="slide active">
+      <div class="slide-content">
+        <h1>National Cybersecurity Strategy</h1>
+        <h2>A Guide to Developing Resilience</h2>
+        <p>Based on the 3rd Edition (2025) framework for national leaders and policymakers to build secure, resilient, digitally empowered societies.</p>
+        <div class="highlight-box">
+          <strong>Core Objective:</strong> Protect the availability, integrity, and confidentiality of assets in connected infrastructures of government, private organizations, and citizens.
+        </div>
+      </div>
+      <div class="slide-number">1 / 7</div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide">
+      <div class="slide-content">
+        <h1>Why a National Strategy?</h1>
+        <h2>Aligning Security with Economic Vision</h2>
+        <ul>
+          <li><strong>Economic & Social Prosperity:</strong> Digitalization drives growth, but only if infrastructure is secure and trusted.</li>
+          <li><strong>Fundamental Human Rights:</strong> Rights offline must be protected online (freedom of expression, privacy, data protection).</li>
+          <li><strong>Strategic Alignment:</strong> Moves beyond reactive measures to a holistic view across the national digital ecosystem.</li>
+        </ul>
+      </div>
+      <div class="slide-number">2 / 7</div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide">
+      <div class="slide-content">
+        <h1>The NCS Lifecycle</h1>
+        <h2>A Continuous Process of Improvement</h2>
+        <p>Cybersecurity is an ongoing effort, not a one-time project.</p>
+        <ol>
+          <li><strong>Initiation:</strong> Identify lead authority, governance, and resource plans.</li>
+          <li><strong>Stocktaking & Analysis:</strong> Assess current cyber-risk landscape.</li>
+          <li><strong>Sustainable Funding:</strong> Secure multi-year resource planning.</li>
+          <li><strong>Production:</strong> Draft and formally approve the Strategy.</li>
+          <li><strong>Implementation:</strong> Execute action plans with clear metrics (SMART APIs).</li>
+          <li><strong>Monitoring & Evaluation:</strong> Measure outcomes and review periodically.</li>
+        </ol>
+      </div>
+      <div class="slide-number">3 / 7</div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide">
+      <div class="slide-content">
+        <h1>Overarching Principles</h1>
+        <h2>Guiding Tenets for the Strategy</h2>
+        <div style="column-count: 2; column-gap: 2rem;">
+          <ul>
+            <li><strong>1. Vision:</strong> Clear whole-of-society goal.</li>
+            <li><strong>2. Comprehensive Approach:</strong> Tailored priorities.</li>
+            <li><strong>3. Inclusiveness:</strong> Active participation.</li>
+            <li><strong>4. Prosperity:</strong> Foster economic growth.</li>
+            <li><strong>5. Human Rights:</strong> Respect offline rights online.</li>
+            <li><strong>6. Risk & Resilience:</strong> Manage, don't eliminate.</li>
+            <li><strong>7. Policy Instruments:</strong> Mix of laws, incentives.</li>
+            <li><strong>8. Leadership:</strong> Clear roles & resources.</li>
+            <li><strong>9. Trust:</strong> Build a trusted digital environment.</li>
+            <li><strong>10. Adaptability:</strong> Technological foresight.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="slide-number">4 / 7</div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide">
+      <div class="slide-content">
+        <h1>Focus Areas 1 & 2</h1>
+        <h2>Governance & Critical Infrastructure</h2>
+        <div class="highlight-box">
+          <strong>Governance:</strong> Designate a competent national authority anchored at the highest level of government. Ensure intra-government and sectoral coordination.
+        </div>
+        <div class="highlight-box">
+          <strong>Critical Infrastructure (CI/CII/ES):</strong> Implement formal approaches to identify operators. Define targeted cybersecurity baseline requirements rather than rigid technical prescriptions.
+        </div>
+      </div>
+      <div class="slide-number">5 / 7</div>
+    </div>
+
+    <!-- Slide 6 -->
+    <div class="slide">
+      <div class="slide-content">
+        <h1>Focus Areas 3 & 4</h1>
+        <h2>Risk Management & Incident Response</h2>
+        <ul>
+          <li><strong>National Risk Framework:</strong> Establish a dynamic national risk register based on a common methodology. Adopt regular assessment cycles.</li>
+          <li><strong>Incident Response:</strong> Establish National and Sectoral CERTs/CSIRTs. Create crisis contingency plans.</li>
+          <li><strong>Collaboration:</strong> Promote threat intelligence sharing (ISACs) and conduct regular national & international cybersecurity exercises to test readiness.</li>
+        </ul>
+      </div>
+      <div class="slide-number">6 / 7</div>
+    </div>
+
+    <!-- Slide 7 -->
+    <div class="slide">
+      <div class="slide-content">
+        <h1>Focus Areas 5, 6, & 7</h1>
+        <h2>Capacity, Legislation, & International Cooperation</h2>
+        <ul>
+          <li><strong>Capacity Building:</strong> Develop formal cybersecurity education pathways and coordinate national awareness campaigns.</li>
+          <li><strong>Legislation:</strong> Establish robust domestic legal frameworks for cybersecurity and cybercrime (e.g., electronic evidence, data protection).</li>
+          <li><strong>International Cooperation:</strong> Embed cyber within foreign policy, engage in international norms (UN, Budapest Convention), and pursue cross-border legal harmonization.</li>
+        </ul>
+      </div>
+      <div class="slide-number">7 / 7</div>
+    </div>
+    
+  </div>
+
+  <div class="progress-bar-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    // Check if we are in a preview mode
+    const urlParams = new URLSearchParams(window.location.search);
+    const isPreview = urlParams.has('preview');
+    
+    const slides = document.querySelectorAll('.slide');
+    const progressBar = document.getElementById('progressBar');
+    const totalSlides = slides.length;
+    let localCurrentIndex = 0;
+    const isIframe = window !== window.parent;
+    
+    let socket = null;
+    let hasSocket = false;
+    
+    // Attempt Socket.io connection if not in preview mode
+    if (!isPreview) {
+      if (typeof io !== 'undefined') {
+        hasSocket = true;
+        socket = io();
+        socket.on('initSlide', (data) => {
+          updateSlideView(data.index);
+        });
+
+        socket.on('slideUpdate', (data) => {
+          updateSlideView(data.index);
+          
+          if (isIframe) {
+            window.parent.postMessage({ type: 'slideUpdate', index: data.index }, '*');
+          }
+        });
+      } else {
+        console.warn('Socket.io not found. Running in standalone static mode.');
+      }
+    }
+
+    // Static mode controls (Keyboard arrows) activated if no socket is present
+    if (!hasSocket && !isPreview) {
+      updateSlideView(0); // init
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+          updateSlideView(Math.min(localCurrentIndex + 1, totalSlides - 1));
+        } else if (e.key === 'ArrowLeft') {
+          updateSlideView(Math.max(localCurrentIndex - 1, 0));
+        }
+      });
+    }
+
+    // Also allow controlling via postMessage if in iframe
+    window.addEventListener('message', (event) => {
+      if (event.data.type === 'forceUpdate') {
+        updateSlideView(event.data.index);
+      }
+    });
+
+    function updateSlideView(index) {
+      if (index < 0 || index >= totalSlides) return;
+      localCurrentIndex = index;
+      
+      // Update classes
+      slides.forEach((slide, i) => {
+        if (i === index) {
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+          // Give slides before current a different transform
+          if (i < index) {
+            slide.style.transform = 'translateY(-20px) scale(0.98)';
+          } else {
+            slide.style.transform = 'translateY(20px) scale(0.98)';
+          }
+        }
+      });
+      
+      // Update progress bar
+      const progress = ((index + 1) / totalSlides) * 100;
+      progressBar.style.width = `${progress}%`;
+    }
+  </script>
+</body>
+</html>
